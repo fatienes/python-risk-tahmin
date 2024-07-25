@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lung Cancer Risk Level</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #798aeb;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #0ea6ac;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .form-container select,
+        .form-container input[type="number"],
+        .form-container input[type="range"] {
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 8px;
+        }
+        .form-container input[type="range"] {
+            width: calc(100% - 42px);
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .level-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="form-container">
+            <form id="healthForm" action="/" method="post">
+                <div class="form-row">
+                    {% for column, value in ui.items() %}
+                        <div class="form-group">
+                            <label for="{{ column }}">{{ column }} ({{ etiketler[column] }}):</label>
+                            {% if column == 'Gender' %}
+                                <select class="form-control" id="{{ column }}" name="{{ column }}">
+                                    <option value="1">Male(Erkek)</option>
+                                    <option value="0">Female(Kadın)</option>
+                                </select>
+                            {% elif column == 'Age' %}
+                                <input required=" required " class="form-control" type="number" id="{{ column }}" name="{{ column }}" min="18" max="100" oninput="updateTextInput(this.value, '{{ column }}')">
+                            {% else %}
+                                <input class="form-control-range" type="range" id="{{ column }}" name="{{ column }}" min="1" max="10" oninput="updateTextInput(this.value, '{{ column }}')">
+                            {% endif %}
+                            <span id="{{ column }}Value"></span>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="submit">Gönder</button>
+            </form>
+      
+    <script>
+        function updateTextInput(value, id) {
+            document.getElementById(id + 'Value').innerText = value;
+        }
+        
+    </script>
+</body>
+</html>
